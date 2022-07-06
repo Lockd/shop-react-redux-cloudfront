@@ -47,6 +47,16 @@ export default function Header() {
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
           <Link className={classes.homeLink} to="/">My Store!</Link>
+
+          <span
+            style={{
+              marginLeft: 20,
+              color: 'pink',
+              display: 'inline-block'
+            }}
+          >
+            {'This should be a noticable change :^)'}
+          </span>
         </Typography>
 
         {auth && (
