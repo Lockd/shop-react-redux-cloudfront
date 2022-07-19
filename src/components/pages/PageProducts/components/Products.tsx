@@ -9,9 +9,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import {Product} from "models/Product";
 import {formatAsPrice} from "utils/utils";
 import AddProductToCart from "components/AddProductToCart/AddProductToCart";
-// import axios from 'axios';
-// import API_PATHS from "constants/apiPaths";
-import productList from "./productList.json";
+import axios from 'axios';
+import API_PATHS from "constants/apiPaths";
+import { CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -34,12 +34,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Products() {
   const classes = useStyles();
   const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // axios.get(`${API_PATHS.bff}/product/available/`)
-    //   .then(res => setProducts(res.data));
-    setProducts(productList);
+    axios.get(`${API_PATHS.product}/products`)
+      .then(res => {
+        setIsLoading(false)
+        setProducts(res.data.products)
+      })
+      .catch(e => setIsLoading(false))
+    
   }, [])
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
 
   return (
     <Grid container spacing={4}>
@@ -56,7 +65,7 @@ export default function Products() {
                 {product.title}
               </Typography>
               <Typography>
-                {formatAsPrice(product.price)}
+                {formatAsPrice(product.priceUSD)}
               </Typography>
             </CardContent>
             <CardActions>
