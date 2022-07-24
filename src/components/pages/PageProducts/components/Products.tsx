@@ -65,7 +65,7 @@ export default function Products() {
                 {product.title}
               </Typography>
               <Typography>
-                {formatAsPrice(product.priceUSD)}
+                {formatAsPrice(product.price)}
               </Typography>
             </CardContent>
             <CardActions>
